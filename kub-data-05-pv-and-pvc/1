@@ -1,0 +1,116 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  annotations:
+    cni.projectcalico.org/containerID: f3de1e7b52254235a76f618a08e43dd94752156c002c8a849d845718b5862ca6
+    cni.projectcalico.org/podIP: 10.244.205.211/32
+    cni.projectcalico.org/podIPs: 10.244.205.211/32
+  creationTimestamp: "2022-10-13T07:57:25Z"
+  generateName: story-deployment-94f5986c8-
+  labels:
+    app: story
+    pod-template-hash: 94f5986c8
+  name: story-deployment-94f5986c8-cdxm6
+  namespace: default
+  ownerReferences:
+  - apiVersion: apps/v1
+    blockOwnerDeletion: true
+    controller: true
+    kind: ReplicaSet
+    name: story-deployment-94f5986c8
+    uid: 163b83ba-c408-40ba-9c0e-ea27d173bd31
+  resourceVersion: "88172"
+  uid: 1b1a723c-623a-4762-8253-fe19e6f7d98f
+spec:
+  containers:
+  - image: vpovarich/kube:5
+    imagePullPolicy: IfNotPresent
+    name: story
+    resources: {}
+    terminationMessagePath: /dev/termination-log
+    terminationMessagePolicy: File
+    volumeMounts:
+    - mountPath: /app/story
+      name: story-volume
+    - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+      name: kube-api-access-pcn8m
+      readOnly: true
+  dnsPolicy: ClusterFirst
+  enableServiceLinks: true
+  nodeName: minikube-m02
+  preemptionPolicy: PreemptLowerPriority
+  priority: 0
+  restartPolicy: Always
+  schedulerName: default-scheduler
+  securityContext: {}
+  serviceAccount: default
+  serviceAccountName: default
+  terminationGracePeriodSeconds: 30
+  tolerations:
+  - effect: NoExecute
+    key: node.kubernetes.io/not-ready
+    operator: Exists
+    tolerationSeconds: 300
+  - effect: NoExecute
+    key: node.kubernetes.io/unreachable
+    operator: Exists
+    tolerationSeconds: 300
+  volumes:
+  - name: story-volume
+    persistentVolumeClaim:
+      claimName: host-pvc
+  - name: kube-api-access-pcn8m
+    projected:
+      defaultMode: 420
+      sources:
+      - serviceAccountToken:
+          expirationSeconds: 3607
+          path: token
+      - configMap:
+          items:
+          - key: ca.crt
+            path: ca.crt
+          name: kube-root-ca.crt
+      - downwardAPI:
+          items:
+          - fieldRef:
+              apiVersion: v1
+              fieldPath: metadata.namespace
+            path: namespace
+status:
+  conditions:
+  - lastProbeTime: null
+    lastTransitionTime: "2022-10-13T07:57:25Z"
+    status: "True"
+    type: Initialized
+  - lastProbeTime: null
+    lastTransitionTime: "2022-10-13T07:57:42Z"
+    status: "True"
+    type: Ready
+  - lastProbeTime: null
+    lastTransitionTime: "2022-10-13T07:57:42Z"
+    status: "True"
+    type: ContainersReady
+  - lastProbeTime: null
+    lastTransitionTime: "2022-10-13T07:57:25Z"
+    status: "True"
+    type: PodScheduled
+  containerStatuses:
+  - containerID: docker://213c655bec2e2b039596fb93def6ad7dfb6cf9d3acff69d0ea8201b913ca1fd2
+    image: vpovarich/kube:5
+    imageID: docker-pullable://vpovarich/kube@sha256:3606fb7a978ea3820eb26f428e2f59657b5510f9ce37ce8b8e871f139a166309
+    lastState: {}
+    name: story
+    ready: true
+    restartCount: 0
+    started: true
+    state:
+      running:
+        startedAt: "2022-10-13T07:57:40Z"
+  hostIP: 192.168.49.3
+  phase: Running
+  podIP: 10.244.205.211
+  podIPs:
+  - ip: 10.244.205.211
+  qosClass: BestEffort
+  startTime: "2022-10-13T07:57:25Z"
